@@ -5,28 +5,28 @@ import 'package:data_walker/data_walker.dart';
 
 /// Class to walk through list elements
 ///
-class ListWalker<T> extends DataWalker<T> {
+class IterableWalker<T> extends DataWalker<T> {
   /// The actual list (must not be empty)
   ///
-  final List<T> list;
+  final Iterable<T> iterable;
 
   /// The constructor
   ///
-  ListWalker(this.list, {super.repeats, super.isRandom, super.random})
-      : super(length: list.length);
+  IterableWalker(this.iterable, {super.repeats, super.isRandom, super.random})
+      : super(length: iterable.length);
 
   /// Get the current value
   ///
   @override
-  T current() => (currentNo < 0 ? next() : list[currentNo]);
+  T current() => (currentNo < 0 ? next() : iterable.elementAt(currentNo));
 
   /// Move to the next value
   ///
   @override
-  T next() => list[nextIndex()];
+  T next() => iterable.elementAt(nextIndex());
 
   /// Reset index and move to the first element
   ///
   @override
-  T reset() => list[resetIndex()];
+  T reset() => iterable.elementAt(resetIndex());
 }

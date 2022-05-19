@@ -5,28 +5,29 @@ import 'package:data_walker/data_walker.dart';
 
 /// Class to walk through list elements
 ///
-class ListWalker<T> extends DataWalker<T> {
+class MapWalker<K, V> extends DataWalker<MapEntry<K, V>> {
   /// The actual list (must not be empty)
   ///
-  final List<T> list;
+  final Map<K, V> map;
 
   /// The constructor
   ///
-  ListWalker(this.list, {super.repeats, super.isRandom, super.random})
-      : super(length: list.length);
+  MapWalker(this.map, {super.repeats, super.isRandom, super.random})
+      : super(length: map.length);
 
   /// Get the current value
   ///
   @override
-  T current() => (currentNo < 0 ? next() : list[currentNo]);
+  MapEntry<K, V> current() =>
+      (currentNo < 0 ? next() : map.entries.elementAt(currentNo));
 
   /// Move to the next value
   ///
   @override
-  T next() => list[nextIndex()];
+  MapEntry<K, V> next() => map.entries.elementAt(nextIndex());
 
   /// Reset index and move to the first element
   ///
   @override
-  T reset() => list[resetIndex()];
+  MapEntry<K, V> reset() => map.entries.elementAt(resetIndex());
 }

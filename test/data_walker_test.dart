@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   group('DataWalker -', () {
     test('First Test', () {
-      IndexWalker();
+      IntWalker(0, 1);
     });
   });
 }

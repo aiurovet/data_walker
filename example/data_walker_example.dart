@@ -6,18 +6,21 @@ import 'package:data_walker/data_walker.dart';
 /// Main entry point for the example
 ///
 void main() {
-  final l = [1, 2, 3];
-  var w = IndexWalker.fromList(list: l, isRandom: true);
+  final list = ['Str11', 'Str22', 'Str33'];
 
-  for (var i = 0; i < 10; i++) {
-    w.next();
-    print('Test 1: ${l[w.cur as int]}');
+  var lw = ListWalker(list, repeats: 2, isRandom: false);
+
+  print('\n*** Sequential ***\n');
+
+  while (lw.repeatNo < lw.repeats) {
+    print('Next: ${lw.next()}, no: ${lw.currentNo}, rpt: ${lw.repeatNo}');
   }
 
-  w = IndexWalker(min: 1, max: 1.3, step: 0.1);
+  print('\n*** Random ***\n');
 
-  for (var i = 0; i < 100; i++) {
-    w.next();
-    print('Test 2: ${w.cur}');
+  lw = ListWalker(list, repeats: 10, isRandom: true);
+
+  while (lw.repeatNo < lw.repeats) {
+    print('Next: ${lw.next()}, no: ${lw.currentNo}, rpt: ${lw.repeatNo}');
   }
 }

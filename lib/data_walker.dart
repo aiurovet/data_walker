@@ -3,4 +3,10 @@
 
 library data_walker;
 
-export 'src/index_walker.dart';
+export 'src/data_walker.dart';
+export 'src/date_time_walker.dart';
+export 'src/int_walker.dart';
+export 'src/iterable_walker.dart';
+export 'src/list_walker.dart';
+export 'src/map_walker.dart';
+export 'src/num_walker.dart';
