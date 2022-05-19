@@ -28,7 +28,7 @@ abstract class DataWalker<T> {
 
   /// Get random index rather than increase sequentially
   ///
-  final bool isRandom;
+  late final bool isRandom;
 
   /// Random number generator
   ///
@@ -51,9 +51,10 @@ abstract class DataWalker<T> {
   DataWalker(
       {this.length = 0,
       this.repeats = 1,
-      this.isRandom = false,
+      bool isRandom = false,
       Random? random,
       this.source}) {
+    this.isRandom = isRandom || (random != null);
     this.random = random ?? Random();
     lastNo = length - 1;
     lastRepeatNo = repeats - 1;
