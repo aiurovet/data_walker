@@ -24,18 +24,8 @@ class NumWalker extends DataWalker<num> {
       {this.step = 1, super.repeats, super.isRandom, super.random})
       : super(length: (step == 0 ? 0 : ((max - min + step) / step).round()));
 
-  /// Get the current value
-  ///
-  @override
-  num current() => (currentNo < 0 ? next() : min + currentNo * step);
-
   /// Move to the next value
   ///
   @override
-  num next() => min + nextIndex() * step;
-
-  /// Reset index and move to the first value
-  ///
-  @override
-  num reset() => min + resetIndex() * step;
+  num next([bool isNext = true]) => min + nextNo(isNext) * step;
 }

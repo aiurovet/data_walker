@@ -15,18 +15,8 @@ class IterableWalker<T> extends DataWalker<T> {
   IterableWalker(this.iterable, {super.repeats, super.isRandom, super.random})
       : super(length: iterable.length);
 
-  /// Get the current value
-  ///
-  @override
-  T current() => (currentNo < 0 ? next() : iterable.elementAt(currentNo));
-
   /// Move to the next value
   ///
   @override
-  T next() => iterable.elementAt(nextIndex());
-
-  /// Reset index and move to the first element
-  ///
-  @override
-  T reset() => iterable.elementAt(resetIndex());
+  T next([bool isNext = true]) => iterable.elementAt(nextNo(isNext));
 }

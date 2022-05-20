@@ -60,34 +60,35 @@ abstract class DataWalker<T> {
     lastRepeatNo = repeats - 1;
   }
 
-  /// Abstract: get the current value
-  ///
-  T current();
-
   /// Abstract: move to the next value
   ///
-  T next();
+  T next([bool isNext = true]);
 
-  /// Abstract: reset the index and move to the first value
+  /// Get the current value
   ///
-  T reset();
+  T current() => next(false);
 
   /// Set [currentNo] to the next value
   /// Increase [repeatNo] when [currentNo] reaches [length] and reset [currentNo]
   /// Returns -1 when [repeatNo] reaches [repeats]
   ///
-  int nextIndex() {
+  int nextNo([bool isNext = true]) {
+    if (!isNext) {
+      return currentNo;
+    }
+
     if (repeatNo >= repeats) {
       isDone = true;
-    } else {
-      if (isRandom) {
-        currentNo = random.nextInt(length);
-        ++repeatNo;
-      } else if (currentNo < lastNo) {
-        ++currentNo;
-      } else if ((++repeatNo) < repeats) {
-        currentNo = 0;
-      }
+      return currentNo;
+    }
+
+    if (isRandom) {
+      currentNo = random.nextInt(length);
+      ++repeatNo;
+    } else if (currentNo < lastNo) {
+      ++currentNo;
+    } else if ((++repeatNo) < repeats) {
+      currentNo = 0;
     }
 
     return currentNo;
@@ -95,11 +96,9 @@ abstract class DataWalker<T> {
 
   /// Reset [currentNo], [isDone] and [repeatNo]
   ///
-  int resetIndex() {
-    currentNo = 0;
+  void reset() {
+    currentNo = -1;
     repeatNo = 0;
     isDone = false;
-
-    return currentNo;
   }
 }

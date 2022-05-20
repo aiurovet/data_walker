@@ -32,22 +32,9 @@ class DateTimeWalker extends DataWalker<DateTime> {
     this.step = step ?? Duration(microseconds: 0);
   }
 
-  /// Get the current value
-  ///
-  @override
-  DateTime current() => (currentNo < 0
-      ? next()
-      : min.add(Duration(microseconds: step.inMicroseconds * currentNo)));
-
   /// Move to the next value
   ///
   @override
-  DateTime next() =>
-      min.add(Duration(microseconds: step.inMicroseconds * nextIndex()));
-
-  /// Reset index and move to the first value
-  ///
-  @override
-  DateTime reset() =>
-      min.add(Duration(microseconds: step.inMicroseconds * resetIndex()));
+  DateTime next([bool isNext = true]) =>
+      min.add(Duration(microseconds: step.inMicroseconds * nextNo(isNext)));
 }

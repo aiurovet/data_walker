@@ -15,19 +15,9 @@ class MapWalker<K, V> extends DataWalker<MapEntry<K, V>> {
   MapWalker(this.map, {super.repeats, super.isRandom, super.random})
       : super(length: map.length);
 
-  /// Get the current value
-  ///
-  @override
-  MapEntry<K, V> current() =>
-      (currentNo < 0 ? next() : map.entries.elementAt(currentNo));
-
   /// Move to the next value
   ///
   @override
-  MapEntry<K, V> next() => map.entries.elementAt(nextIndex());
-
-  /// Reset index and move to the first element
-  ///
-  @override
-  MapEntry<K, V> reset() => map.entries.elementAt(resetIndex());
+  MapEntry<K, V> next([bool isNext = true]) =>
+      map.entries.elementAt(nextNo(isNext));
 }

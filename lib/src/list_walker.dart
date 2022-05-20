@@ -15,18 +15,8 @@ class ListWalker<T> extends DataWalker<T> {
   ListWalker(this.list, {super.repeats, super.isRandom, super.random})
       : super(length: list.length);
 
-  /// Get the current value
-  ///
-  @override
-  T current() => (currentNo < 0 ? next() : list[currentNo]);
-
   /// Move to the next value
   ///
   @override
-  T next() => list[nextIndex()];
-
-  /// Reset index and move to the first element
-  ///
-  @override
-  T reset() => list[resetIndex()];
+  T next([bool isNext = true]) => list[nextNo(isNext)];
 }

@@ -24,18 +24,8 @@ class IntWalker extends DataWalker<int> {
       {this.step = 1, super.repeats, super.isRandom, super.random})
       : super(length: (step == 0 ? 0 : ((max - min + step) ~/ step)));
 
-  /// Get the current value
-  ///
-  @override
-  int current() => (currentNo < 0 ? next() : min + currentNo * step);
-
   /// Move to the next value
   ///
   @override
-  int next() => min + nextIndex() * step;
-
-  /// Reset index and move to the first value
-  ///
-  @override
-  int reset() => min + resetIndex() * step;
+  int next([bool isNext = true]) => min + nextNo(isNext) * step;
 }
