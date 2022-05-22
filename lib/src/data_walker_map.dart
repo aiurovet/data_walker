@@ -5,23 +5,17 @@ import 'package:data_walker/data_walker.dart';
 
 /// Type for the value processing handler
 ///
-typedef DataWalkerMapProc<K> = bool Function(Map<K, Object> values);
+typedef DataWalkerMapProc = bool Function(Map values);
 
 /// Aggregator for DataWalkers
 ///
-extension DataWalkerMap<K, D extends DataWalker> on Map<K, D> {
-  /// Dummy map proc
-  ///
-  bool dummyMapProc(Map<K, Object> values) => true;
-
+extension DataWalkerMap<K, V extends DataWalker> on Map<K, V> {
   /// Execution starting point
-  /// Returns false if [mapProc] or [_exec] returned false
+  /// Returns false if [valueProc] or [_exec] returned false
   ///
-  bool exec({DataWalkerMapProc? mapProc, int repeats = 1}) {
-    final mapProcEx = mapProc ?? dummyMapProc;
-
+  bool exec({DataWalkerMapProc? valueProc, int repeats = 1}) {
     for (var i = 0; i < repeats; i++) {
-      if (!_exec(<K, Object>{}, 0, mapProcEx)) {
+      if (!_exec({}, 0, valueProc)) {
         return false;
       }
     }
@@ -29,38 +23,89 @@ extension DataWalkerMap<K, D extends DataWalker> on Map<K, D> {
   }
 
   /// Execution recursion point
-  /// Returns false if [mapProc] or subsequent recursive call return false
+  /// Returns false if [valueProc] or subsequent recursive call return false
   ///
-  bool _exec(Map<K, Object> values, int i, DataWalkerMapProc<K> mapProc) {
+  bool _exec(Map values, int walkerNo, DataWalkerMapProc? valueProc) {
     // Initialize current waker data
     //
-    final entry = entries.elementAt(i);
+    final entry = entries.elementAt(walkerNo);
     final key = entry.key;
     final walker = entry.value;
-    final walkerLastNo = walker.lastNo;
+    final walkerRepeats = walker.repeats;
 
-    // Ensure the walker is not empty
+    // Ensure the current walker is not empty
     //
-    if (walkerLastNo < 0) {
+    if ((walker.lastNo < 0) || (walkerRepeats <= 0)) {
       return true;
     }
 
     // Reset the walker's all counters and run through all its values once
     //
-    final isLast = (i >= length - 1);
+    walker.reset();
 
-    do {
-      values[key] = walker.next();
+    final isLastWalker = (walkerNo >= length - 1);
 
-      if (isLast) {
-        if (!mapProc(values)) {
+    while (true) {
+      final nextValue = walker.next();
+
+      if (walker.repeatNo >= walkerRepeats) {
+        break;
+      }
+
+      values[key] = nextValue;
+
+      if (isLastWalker) {
+        if ((valueProc != null) && !valueProc(values)) {
           return false;
         }
-      } else if (!_exec(values, i + 1, mapProc)) {
+      } else if (!_exec(values, walkerNo + 1, valueProc)) {
         return false;
       }
-    } while (walker.currentNo <= walkerLastNo);
+    }
 
     return true;
+  }
+
+  /// Returns comma-separated pairs of 'key: value'
+  /// Useful for printing the name of a test as a list of its parameters
+  ///
+  String valuesToString(Map values,
+      {String? prefix,
+      String? suffix,
+      bool quoteStrings = true,
+      bool useKeys = true}) {
+    final result = StringBuffer();
+
+    if ((prefix != null) && prefix.isNotEmpty) {
+      result.write(prefix);
+    }
+
+    values.forEach((key, value) {
+      if (result.isNotEmpty) {
+        result.write(', ');
+      }
+
+      if (useKeys) {
+        final keyStr = key.toString();
+
+        if (keyStr.isNotEmpty) {
+          result
+            ..write(keyStr)
+            ..write(': ');
+        }
+      }
+
+      if (quoteStrings && (value is String)) {
+        result.write('"$value"');
+      } else {
+        result.write(value.toString());
+      }
+    });
+
+    if ((suffix != null) && suffix.isNotEmpty) {
+      result.write(suffix);
+    }
+
+    return result.toString();
   }
 }

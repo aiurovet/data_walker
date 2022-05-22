@@ -22,10 +22,6 @@ abstract class DataWalker<T> {
   ///
   final int length;
 
-  /// Flag indicating the walk is over
-  ///
-  bool isDone = false;
-
   /// Get random index rather than increase sequentially
   ///
   late final bool isRandom;
@@ -58,6 +54,7 @@ abstract class DataWalker<T> {
     this.random = random ?? Random();
     lastNo = length - 1;
     lastRepeatNo = repeats - 1;
+    repeatNo = (this.isRandom ? -1 : 0);
   }
 
   /// Abstract: move to the next value
@@ -73,12 +70,7 @@ abstract class DataWalker<T> {
   /// Returns -1 when [repeatNo] reaches [repeats]
   ///
   int nextNo([bool isNext = true]) {
-    if (!isNext) {
-      return currentNo;
-    }
-
-    if (repeatNo >= repeats) {
-      isDone = true;
+    if (!isNext || (repeatNo >= repeats)) {
       return currentNo;
     }
 
@@ -87,18 +79,18 @@ abstract class DataWalker<T> {
       ++repeatNo;
     } else if (currentNo < lastNo) {
       ++currentNo;
-    } else if ((++repeatNo) < repeats) {
+    } else {
       currentNo = 0;
+      ++repeatNo;
     }
 
     return currentNo;
   }
 
-  /// Reset [currentNo], [isDone] and [repeatNo]
+  /// Reset [currentNo] and [repeatNo]
   ///
   void reset() {
     currentNo = -1;
-    repeatNo = 0;
-    isDone = false;
+    repeatNo = (isRandom ? -1 : 0);
   }
 }
