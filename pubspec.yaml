@@ -1,7 +1,8 @@
 name: data_walker
 description: A library to supply sequential or random objects within the given range and repeats.
-version: 0.1.0
+version: 0.1.1
 homepage: https://aiurovet.blogspot.com/
+repository: https://github.com/aiurovet/data_walker/
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
