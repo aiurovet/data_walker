@@ -10,16 +10,13 @@ import 'package:data_walker/data_walker.dart';
 class BoolWalker extends DataWalker<bool> {
   /// The constructor
   ///
-  BoolWalker({super.repeats, super.isRandom, super.random})
-      : super(length: 2);
+  BoolWalker({super.repeats, super.isRandom, super.random}) : super(length: 2);
 
   /// Copy constructor
   ///
-  BoolWalker copyWith(
-          {int? repeats,
-          bool? isRandom,
-          Random? random}) =>
-      BoolWalker(repeats: repeats ?? this.repeats,
+  BoolWalker copyWith({int? repeats, bool? isRandom, Random? random}) =>
+      BoolWalker(
+          repeats: repeats ?? this.repeats,
           isRandom: isRandom ?? this.isRandom,
           random: random ?? this.random);
 
