@@ -26,12 +26,12 @@ class DateTimeWalker extends DataWalker<DateTime> {
       {Duration? step, super.repeats, super.isRandom, super.random})
       : super(
             length: ((step == null) || (step.inMicroseconds == 0)
-                ? 0
+                ? 1
                 : ((max.microsecondsSinceEpoch -
                         min.microsecondsSinceEpoch +
                         step.inMicroseconds) ~/
                     step.inMicroseconds))) {
-    this.step = step ?? Duration(microseconds: 0);
+    this.step = step ?? Duration(microseconds: 1);
   }
 
   /// Copy constructor

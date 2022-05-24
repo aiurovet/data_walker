@@ -72,7 +72,6 @@ void main() {
       repeats: 1,
       valueProc: (values) {
         print(walkers.valuesToString(values, useKeys: false));
-        return true;
       });
 
   print('\n*** Sequential Plain NumWalker ***\n');
@@ -82,7 +81,7 @@ void main() {
   while (true) {
     final n = walker.next().toStringAsFixed(2);
 
-    if (walker.repeatNo >= walker.repeats) {
+    if (walker.isFinished) {
       break;
     }
 
@@ -96,7 +95,7 @@ void main() {
   while (true) {
     final n = walker.next().toStringAsFixed(2);
 
-    if (walker.repeatNo >= walker.repeats) {
+    if (walker.isFinished) {
       break;
     }
 

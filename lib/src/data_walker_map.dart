@@ -5,7 +5,7 @@ import 'package:data_walker/data_walker.dart';
 
 /// Type for the value processing handler
 ///
-typedef DataWalkerMapProc = bool Function(Map values);
+typedef DataWalkerMapProc = void Function(Map values);
 
 /// Aggregator for DataWalkers
 ///
@@ -15,9 +15,7 @@ extension DataWalkerMap<K, V extends DataWalker> on Map<K, V> {
   ///
   bool exec({DataWalkerMapProc? valueProc, int repeats = 1}) {
     for (var i = 0; i < repeats; i++) {
-      if (!_exec({}, 0, valueProc)) {
-        return false;
-      }
+      _exec({}, 0, valueProc);
     }
     return true;
   }
@@ -25,7 +23,7 @@ extension DataWalkerMap<K, V extends DataWalker> on Map<K, V> {
   /// Execution recursion point
   /// Returns false if [valueProc] or subsequent recursive call return false
   ///
-  bool _exec(Map values, int walkerNo, DataWalkerMapProc? valueProc) {
+  void _exec(Map values, int walkerNo, DataWalkerMapProc? valueProc) {
     // Initialize current waker data
     //
     final entry = entries.elementAt(walkerNo);
@@ -36,7 +34,7 @@ extension DataWalkerMap<K, V extends DataWalker> on Map<K, V> {
     // Ensure the current walker is not empty
     //
     if ((walker.lastNo < 0) || (walkerRepeats <= 0)) {
-      return true;
+      return;
     }
 
     // Reset the walker's all counters and run through all its values once
@@ -48,22 +46,20 @@ extension DataWalkerMap<K, V extends DataWalker> on Map<K, V> {
     while (true) {
       final nextValue = walker.next();
 
-      if (walker.repeatNo >= walkerRepeats) {
+      if (walker.isFinished) {
         break;
       }
 
       values[key] = nextValue;
 
       if (isLastWalker) {
-        if ((valueProc != null) && !valueProc(values)) {
-          return false;
+        if (valueProc != null) {
+          valueProc(values);
         }
-      } else if (!_exec(values, walkerNo + 1, valueProc)) {
-        return false;
+      } else {
+        _exec(values, walkerNo + 1, valueProc);
       }
     }
-
-    return true;
   }
 
   /// Returns comma-separated pairs of 'key: value'

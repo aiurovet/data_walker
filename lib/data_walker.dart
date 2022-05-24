@@ -3,6 +3,7 @@
 
 library data_walker;
 
+export 'src/bool_walker.dart';
 export 'src/data_walker_map.dart';
 export 'src/data_walker.dart';
 export 'src/date_time_walker.dart';

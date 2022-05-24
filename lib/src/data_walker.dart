@@ -10,6 +10,10 @@ abstract class DataWalker<T> {
   ///
   int currentNo = -1;
 
+  /// Flag showing there is no more iteration to go
+  ///
+  bool isFinished = false;
+
   /// Last index
   ///
   late final int lastNo;
@@ -70,18 +74,25 @@ abstract class DataWalker<T> {
   /// Returns -1 when [repeatNo] reaches [repeats]
   ///
   int nextNo([bool isNext = true]) {
-    if (!isNext || (repeatNo >= repeats)) {
+    if (!isNext) {
+      return currentNo;
+    }
+
+    if (repeatNo >= repeats) {
+      isFinished = true;
       return currentNo;
     }
 
     if (isRandom) {
       currentNo = random.nextInt(length);
       ++repeatNo;
+      isFinished = (repeatNo >= repeats);
     } else if (currentNo < lastNo) {
       ++currentNo;
     } else {
       currentNo = 0;
       ++repeatNo;
+      isFinished = (repeatNo >= repeats);
     }
 
     return currentNo;
@@ -91,6 +102,7 @@ abstract class DataWalker<T> {
   ///
   void reset() {
     currentNo = -1;
+    isFinished = false;
     repeatNo = (isRandom ? -1 : 0);
   }
 }
