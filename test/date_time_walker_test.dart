@@ -19,6 +19,8 @@ void main() {
           step: Duration(days: 3), repeats: 3),
       DateTimeWalker(DateTime(2022, 2, 2), DateTime(2022, 1, 2),
           step: Duration(days: -3), repeats: 2),
+      DateTimeWalker(DateTime(2022, 1, 2, 11, 12, 13), DateTime(2022, 1, 2, 11, 12, 14),
+          step: Duration(microseconds: 123)),
       DateTimeWalker(DateTime(2022, 1, 2), DateTime(2022, 2, 2),
           repeats: 3, isRandom: true),
       DateTimeWalker(DateTime(2022, 1, 2), DateTime(2022, 2, 2),
