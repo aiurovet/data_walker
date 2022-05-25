@@ -20,7 +20,7 @@ class DateTimeWalker extends DataWalker<DateTime> {
   ///
   late final Duration step;
 
-  /// The constructor
+  /// Default constructor
   ///
   DateTimeWalker(this.min, this.max,
       {Duration? step, super.repeats, super.isRandom, super.random})

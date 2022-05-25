@@ -14,3 +14,4 @@ export 'src/iterable_walker.dart';
 export 'src/list_walker.dart';
 export 'src/map_walker.dart';
 export 'src/num_walker.dart';
+export 'src/string_walker.dart';

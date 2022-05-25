@@ -20,7 +20,7 @@ class NumWalker extends DataWalker<num> {
   ///
   final num step;
 
-  /// The constructor
+  /// Default constructor
   ///
   NumWalker(this.min, this.max,
       {this.step = 1, super.repeats, super.isRandom, super.random})

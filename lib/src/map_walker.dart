@@ -12,7 +12,7 @@ class MapWalker<K, V> extends DataWalker<MapEntry<K, V>> {
   ///
   final Map<K, V> map;
 
-  /// The constructor
+  /// Default constructor
   ///
   MapWalker(this.map, {super.repeats, super.isRandom, super.random})
       : super(length: map.length);

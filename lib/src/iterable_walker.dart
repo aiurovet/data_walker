@@ -12,7 +12,7 @@ class IterableWalker<T> extends DataWalker<T> {
   ///
   final Iterable<T> iterable;
 
-  /// The constructor
+  /// Default constructor
   ///
   IterableWalker(this.iterable, {super.repeats, super.isRandom, super.random})
       : super(length: iterable.length);

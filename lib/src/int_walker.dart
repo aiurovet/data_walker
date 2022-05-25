@@ -20,7 +20,7 @@ class IntWalker extends DataWalker<int> {
   ///
   final int step;
 
-  /// The constructor
+  /// Default constructor
   ///
   IntWalker(this.min, this.max,
       {this.step = 1, super.repeats, super.isRandom, super.random})

@@ -8,7 +8,7 @@ import 'package:data_walker/data_walker.dart';
 /// Class to walk through the booleans
 ///
 class BoolWalker extends DataWalker<bool> {
-  /// The constructor
+  /// Default constructor
   ///
   BoolWalker({super.repeats, super.isRandom, super.random}) : super(length: 2);
 

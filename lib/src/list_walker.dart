@@ -12,7 +12,7 @@ class ListWalker<T> extends DataWalker<T> {
   ///
   final List<T> list;
 
-  /// The constructor
+  /// Default constructor
   ///
   ListWalker(this.list, {super.repeats, super.isRandom, super.random})
       : super(length: list.length);
