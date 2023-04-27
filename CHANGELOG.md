@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Website changed
+
 ## 0.2.0
 
 - Added StringWalker via the use of random_unicode package
