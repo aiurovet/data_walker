@@ -1,3 +1,7 @@
+## 0.2.3
+
+- Upgraded random_unicode package
+
 ## 0.2.2
 
 - Upgraded packages
